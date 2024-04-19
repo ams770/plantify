@@ -1,0 +1,25 @@
+{
+    "onboarding_title_one": "Welcome To Plantify!",
+    "onboarding_title_two": "Learn About Each Plant",
+    "onboarding_title_three": "Personalize Your Experience",
+    "onboarding_message_one": "Discover the fascinating world of plants with Plantify, your ultimate plant identification companion",
+    "onboarding_message_two": "Get detailed information about the identified plant, including its name, characteristics, care tips, and more",
+    "onboarding_message_three": "Customize your plant collection, create wishlists, and receive personalized recommendations based on your interests",
+    
+    "next": "Next",
+    "submit": "Submit",
+    "pick_from_gallery": "Pick From Gallery",
+    "take_a_photo": "Take a Photo",
+    "using _AR": "Using AR",
+
+    "setttings" : "Settings",
+    "app_language": "App Language",
+    "history": "History",
+    "name" : "Name",
+    "accuracy" : "Accuracy",
+    "scientific_name" : "Scientific Name",
+    "description" : "Description",
+    "care_instructions" : "Care Instructions",
+    "select_language": "Select Language"
+    
+}
