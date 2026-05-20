@@ -10,6 +10,8 @@ import 'package:plantdetection/presentation/cubit/cubit.dart';
 import 'package:plantdetection/presentation/resources/color_manager.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../app/app_preferences.dart' show AppPreferences;
+import '../../app/di.dart';
 import '../resources/app_strings.dart';
 import '../resources/assets_manager.dart';
 import '../resources/routes_manager.dart';
@@ -29,7 +31,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   @override
   void initState() {
     super.initState();
-    // instance<AppPreferences>().setFirstOpen();
+    instance<AppPreferences>().setFirstOpen();
   }
 
   _goNext() {
@@ -125,11 +127,11 @@ class _OnboardnigBuilder extends StatelessWidget {
   const _OnboardnigBuilder({
     required this.title,
     required this.message,
-    required this.svg,    
+    required this.svg,
   });
   final String title;
   final String message;
-  final String svg;  
+  final String svg;
 
   @override
   Widget build(BuildContext context) {
@@ -137,35 +139,27 @@ class _OnboardnigBuilder extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
-        SvgPicture.asset(
-          svg,
-          fit: BoxFit.contain,
-          height: AppSize.s300,
-        ),        
+        SvgPicture.asset(svg, fit: BoxFit.contain, height: AppSize.s300),
 
         /* ------------------------------ Title Builder ----------------------------- */
         Text(
           title,
           textAlign: TextAlign.center,
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall
-              ?.copyWith(color: ColorManager.primary),
+          style: Theme.of(
+            context,
+          ).textTheme.headlineSmall?.copyWith(color: ColorManager.primary),
         ),
         AppSize.s10.height,
 
         /* ------------------------------ Message Builder ----------------------------- */
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppPadding.p10,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p10),
           child: Text(
             message,
             textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium
-                ?.copyWith(color: ColorManager.lightGrey),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(color: ColorManager.lightGrey),
           ),
         ),
       ],

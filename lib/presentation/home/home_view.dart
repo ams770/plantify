@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -30,97 +29,78 @@ class HomeView extends StatelessWidget {
           /* ------------------------------ On Close App ------------------------------ */
           onPopInvoked: (_) => cubit.onCloseApp(),
           /* ----------------------------- Screen Builder ----------------------------- */
-          child: Stack(
-            children: [
-              /* --------------------------- Background Builder --------------------------- */
-              SvgPicture.asset(
-                SVGAssets.background,
-                alignment: Alignment.topCenter,
-                // color: ColorManager.primary,
-              ),
-              Scaffold(
-                backgroundColor: Colors.transparent,
-                key: cubit.homeScaffoldKey,
-
-                /* -------------------------------------------------------------------------- */
-                /*                                   App Bar                                  */
-                /* -------------------------------------------------------------------------- */
-                appBar: AppBar(
-                  backgroundColor: Colors.transparent,
-                  systemOverlayStyle: const SystemUiOverlayStyle(
-                    statusBarColor: Colors.transparent,
-                  ),
-                  leading: GestureDetector(
-                    onTap: cubit.openHomeDrawer,
-                    child: const Icon(
-                      CupertinoIcons.line_horizontal_3_decrease,
-                      color: ColorManager.white,
-                    ),
-                  ),
-                ),
-                /* -------------------------------------------------------------------------- */
-                /*                                   Drawer                                   */
-                /* -------------------------------------------------------------------------- */
-                drawer: Drawer(
-                  child: ListView(
+          child: Scaffold(
+            key: cubit.homeScaffoldKey,
+            backgroundColor: ColorManager.offWhite,
+            extendBodyBehindAppBar: true,
+            extendBody: true,
+            /* -------------------------------------------------------------------------- */
+            /*                                    Body                                    */
+            /* -------------------------------------------------------------------------- */
+            body: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Stack(
+                    alignment: .centerStart,
                     children: [
-                      AppSize.s70.h.height,
-                      /* ---------------------------------- Title --------------------------------- */
-                      Text(
-                        AppStrings.setttings.tr(),
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayMedium
-                            ?.copyWith(color: ColorManager.white),
+                      SvgPicture.asset(
+                        SVGAssets.background,
+                        alignment: Alignment.topCenter,
+
+                        // color: ColorManager.primary,
                       ),
-                      AppSize.s50.height,
-                      /* ------------------------------ App Language ------------------------------ */
-                      _DrawerItemBuilder(
-                        title: AppStrings.appLanguage.tr(),
-                        icon: Icons.language_rounded,
-                        onTap: () {},
-                      ),
-                      AppSize.s20.height,
-                      const _HorizontalSeperator(),
-                      AppSize.s20.height,
-                      /* ------------------------------ Hostory ------------------------------ */
-                      _DrawerItemBuilder(
-                        title: AppStrings.history.tr(),
-                        icon: CupertinoIcons.table_badge_more,
-                        onTap: () {},
+
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: AppMargin.m20),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: ColorManager.white,
+                        ),
+                        child: Image.asset(
+                          ImageAssets.logo,
+                          height: AppSize.s160,
+                        ),
                       ),
                     ],
                   ),
                 ),
 
-                /* -------------------------------------------------------------------------- */
-                /*                                    Body                                    */
-                /* -------------------------------------------------------------------------- */
-                body: ListView(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-                  children: [
-                    (MediaQuery.sizeOf(context).height / 5).height,
-                    /* ---------------------------- Pick From Gallery --------------------------- */
-                    _HomeItemBuilder(
-                      title: AppStrings.pickFromGallery.tr(),
-                      subTitle: '',
-                      svg: SVGAssets.gallery,
-                      onTap: () => cubit.pickGalleryImage(context),
+                /* ---------------------------- Pick From Gallery --------------------------- */
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppPadding.p20,
+                  ),
+                  sliver: SliverFillRemaining(
+                    child: Column(
+                      mainAxisAlignment: .center,
+                      children: [
+                        // _HomeItemBuilder(
+                        //   title: AppStrings.pickFromGallery.tr(),
+                        //   subTitle: '',
+                        //   svg: SVGAssets.gallery,
+                        //   onTap: () => cubit.pickGalleryImage(context),
+                        // ),
+                        // AppSize.s20.height,
+                        _HomeItemBuilder(
+                          title: AppStrings.pickFromGallery.tr(),
+                          subTitle: '',
+                          svg: SVGAssets.gallery,
+                          onTap: () => cubit.pickGalleryImage(context),
+                        ),
+                        AppSize.s20.height,
+                        /* ------------------------- Using Augmanted Reality ------------------------ */
+                        _HomeItemBuilder(
+                          title: AppStrings.takePhoto.tr(),
+                          subTitle: '',
+                          svg: SVGAssets.augmantedReality,
+                          onTap: () => cubit.takePhotoFromCamera(context),
+                        ),
+                      ],
                     ),
-                    AppSize.s20.height,
-                    /* ------------------------- Using Augmanted Reality ------------------------ */
-                    _HomeItemBuilder(
-                      title: AppStrings.takePhoto.tr(),
-                      subTitle: '',
-                      svg: SVGAssets.augmantedReality,
-                      onTap: () => cubit.takePhotoFromCamera(context),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
@@ -135,10 +115,12 @@ class _HomeItemBuilder extends StatelessWidget {
     required this.svg,
     required this.onTap,
   });
+
   final String title;
   final String subTitle;
   final String svg;
   final VoidCallback onTap;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -152,16 +134,13 @@ class _HomeItemBuilder extends StatelessWidget {
           vertical: AppPadding.p10,
         ),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppSize.s10),
-          color: ColorManager.offWhite,
+          borderRadius: BorderRadius.circular(AppSize.s30),
+          color: ColorManager.white,
         ),
         child: Row(
           children: [
             /* ------------------------------- SVG Builder ------------------------------ */
-            SvgPicture.asset(
-              svg,
-              height: AppSize.s120,
-            ),
+            SvgPicture.asset(svg, height: AppSize.s120),
             /* ------------------------------ Title Builder ----------------------------- */
             Expanded(
               child: Column(
@@ -174,7 +153,7 @@ class _HomeItemBuilder extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -182,8 +161,8 @@ class _HomeItemBuilder extends StatelessWidget {
   }
 }
 
-class _HorizontalSeperator extends StatelessWidget {
-  const _HorizontalSeperator({super.key});
+class _HorizontalSeparator extends StatelessWidget {
+  const _HorizontalSeparator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -196,11 +175,16 @@ class _HorizontalSeperator extends StatelessWidget {
 }
 
 class _DrawerItemBuilder extends StatelessWidget {
-  const _DrawerItemBuilder(
-      {required this.title, required this.icon, required this.onTap});
+  const _DrawerItemBuilder({
+    required this.title,
+    required this.icon,
+    required this.onTap,
+  });
+
   final String title;
   final IconData icon;
   final VoidCallback onTap;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -208,20 +192,16 @@ class _DrawerItemBuilder extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            icon,
-            color: ColorManager.white,
-            size: AppSize.s23,
-          ),
+          Icon(icon, color: ColorManager.white, size: AppSize.s23),
           AppSize.s15.width,
           SizedBox(
             width: AppSize.s110,
             child: Text(
               title,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: ColorManager.white,
-                    fontWeight: FontWeightManager.semiBold,
-                  ),
+                color: ColorManager.white,
+                fontWeight: FontWeightManager.semiBold,
+              ),
             ),
           ),
         ],
