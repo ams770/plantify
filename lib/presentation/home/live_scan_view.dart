@@ -62,7 +62,11 @@ class _LiveScanScreenState extends State<LiveScanScreen>
               file: state.plantImage,
               prediction: state.result,
               details: state.details,
-            ).then((_) => _scanAnim.repeat(reverse: true));
+            ).then((_) {
+              if (context.mounted) {
+                AppCubit.get(context).resumeLiveScan();
+              }
+            });
           } else if (state is LiveScanActiveState) {
             _scanAnim.repeat(reverse: true);
           }
