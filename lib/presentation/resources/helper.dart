@@ -15,10 +15,9 @@ class AppHelpers {
   }) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true,
       useSafeArea: true,
-      backgroundColor: Colors.white,
-      barrierColor: Colors.black26,
+      // backgroundColor: Colors.white,
+      // barrierColor: Colors.black26,
       showDragHandle: true,
       builder: (ctx) => PlantDetailsPage(
         plantImage: file,

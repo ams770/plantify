@@ -19,56 +19,20 @@ class AppFilePicker {
   Future<File?> pickSingleImage() async {
     try {
       FilePickerResult? file = await FilePicker.pickFiles(type: FileType.image);
-
-      if (file != null) {
-        if (kIsWeb) {
-          Uint8List? fileBytes = file.files.single.bytes;
-          if (fileBytes != null) {
-            return await File("").writeAsBytes(fileBytes);
-          }
-        }
-        return File(file.files.first.path!);
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    return null;
-  }
-
-  Future<Uint8List?> pickSingleWebImage() async {
-    try {
-      FilePickerResult? file = await FilePicker.pickFiles(type: FileType.image);
-
-      if (file != null) {
-        return file.files.single.bytes;
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+      if (file != null) return File(file.files.first.path!);
+    } catch (e) {}
     return null;
   }
 
   Future<XFile?> catchCameraImage({int? quality}) async {
     return await _imagePicker.pickImage(
       source: ImageSource.camera,
-      preferredCameraDevice: CameraDevice.front,
+      // preferredCameraDevice: CameraDevice.values.last,
       imageQuality: quality,
     );
   }
 
   Future<List<XFile?>> pickMultiImages() async {
     return await _imagePicker.pickMultiImage();
-  }
-
-  Future<File?> pickPdf() async {
-    try {
-      FilePickerResult? file = await FilePicker.pickFiles(
-        allowedExtensions: ["pdf"],
-        type: FileType.custom,
-      );
-
-      if (file != null) return File(file.files.first.path!);
-    } catch (e) {}
-    return null;
   }
 }

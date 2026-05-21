@@ -16,116 +16,175 @@ class PlantDetailsPage extends StatelessWidget {
     required this.prediction,
     required this.details,
   });
+
   final File plantImage;
   final PlantifyPrediction prediction;
   final PlantDetails details;
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final double confidencePercentage = (prediction.confidence * 100).clamp(
+      0,
+      100,
+    );
+
     return Scaffold(
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-        // crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppPadding.p24,
+          vertical: AppPadding.p10,
+        ),
         children: [
-          /* -------------------------------------------------------------------------- */
-          /*                                Image Builder                               */
-          /* -------------------------------------------------------------------------- */
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
-                child: Container(
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppSize.s10),
-                  ),
+              // Small reference image
+              Hero(
+                tag: plantImage.path,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(AppSize.s16),
                   child: Image.file(
                     plantImage,
-                    height: AppSize.s220,
+                    width: 90,
+                    height: 90,
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
+              const SizedBox(width: AppSize.s16),
+
+              // Text and Badge Stack
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      details.name,
+                      style: textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    /* Friendly Match Badge */
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: ColorManager.primary.withOpacity(0.12),
+                        borderRadius: BorderRadius.circular(AppSize.s20),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.check_circle,
+                            size: 14,
+                            color: ColorManager.primary,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            "${confidencePercentage.ceil()}% ${AppStrings.accuracy}",
+                            style: textTheme.bodySmall?.copyWith(
+                              color: ColorManager.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
-          AppSize.s20.height,
-          Text(
-            details.name,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          AppSize.s20.height,
 
-          /* -------------------------------------------------------------------------- */
-          /*                               Scientific Name                              */
-          /* -------------------------------------------------------------------------- */
-          _ItemBuilder(
-            title: AppStrings.scientificName.tr(),
-            value: details.scientificName,
+          Divider(
+            height: AppSize.s40,
+            color: ColorManager.lightPrimary.withOpacity(0.5),
           ),
 
           /* -------------------------------------------------------------------------- */
-          /*                              Accuracy Builder                              */
+          /* --- Description Section ---                                               */
           /* -------------------------------------------------------------------------- */
-          // _ItemBuilder(
-          //   title: AppStrings.accuracy.tr(),
-          //   value: (prediction.confidence * 100).ceil().toString(),
-          // ),
-
-          /* -------------------------------------------------------------------------- */
-          /*                                 Description                                */
-          /* -------------------------------------------------------------------------- */
-          _ItemBuilder(
+          _SectionHeader(
             title: AppStrings.description.tr(),
-            value: details.description,
+            icon: Icons.info_outline,
+          ),
+          const SizedBox(height: AppSize.s10),
+          Text(
+            details.description,
+            style: textTheme.bodyMedium?.copyWith(
+              color: Colors.black87,
+              height: 1.5,
+            ),
           ),
 
+          const SizedBox(height: AppPadding.p24),
+
           /* -------------------------------------------------------------------------- */
-          /*                              Care Instructions                             */
+          /* --- Care Instructions Section ---                                         */
           /* -------------------------------------------------------------------------- */
-          _ItemBuilder(
+          _SectionHeader(
             title: AppStrings.careInstructions.tr(),
-            value: details.careInstructions,
+            icon: Icons.eco_outlined,
+          ),
+          const SizedBox(height: AppSize.s10),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(AppPadding.p16),
+            decoration: BoxDecoration(
+              color: ColorManager.primary.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(AppSize.s16),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  left: BorderSide(width: 4, color: ColorManager.primary),
+                ),
+              ),
+              padding: const EdgeInsets.only(left: AppPadding.p12),
+              child: Text(
+                details.careInstructions,
+                style: textTheme.bodyMedium?.copyWith(
+                  color: Colors.black87,
+                  height: 1.5,
+                ),
+              ),
+            ),
           ),
 
-          AppSize.s20.height,
+          const SafeArea(child: SizedBox(height: AppSize.s20)),
         ],
       ),
     );
   }
 }
 
-class _ItemBuilder extends StatelessWidget {
-  const _ItemBuilder({super.key, required this.title, required this.value});
+class _SectionHeader extends StatelessWidget {
+  const _SectionHeader({required this.title, required this.icon});
+
   final String title;
-  final String value;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppPadding.p10,
-        vertical: AppPadding.p15,
-      ),
-      margin: const EdgeInsets.only(bottom: AppMargin.m10),
-      decoration: BoxDecoration(
-        color: ColorManager.offWhite.withOpacity(0.3),
-        border: Border.all(color: ColorManager.offWhite),
-        borderRadius: BorderRadius.circular(AppSize.s10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            textAlign: TextAlign.start,
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(color: ColorManager.primary),
+    return Row(
+      children: [
+        Icon(icon, size: 20, color: ColorManager.primary),
+        const SizedBox(width: 8),
+        Text(
+          title,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: ColorManager.primary,
           ),
-          AppSize.s5.height,
-          Text(value, style: Theme.of(context).textTheme.titleLarge),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

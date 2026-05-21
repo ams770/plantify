@@ -14,7 +14,7 @@ ThemeData get lightTheme => ThemeData(
     backgroundColor: Colors.white,
     modalBackgroundColor: Colors.white,
     surfaceTintColor: ColorManager.white,
-    modalBarrierColor: ColorManager.offWhite.withOpacity(0.1),
+    // modalBarrierColor: ColorManager.offWhite,
   ),
   popupMenuTheme: PopupMenuThemeData(
     textStyle: getRegularStyle(
@@ -69,7 +69,7 @@ ThemeData get lightTheme => ThemeData(
 
   dialogTheme: const DialogThemeData(
     backgroundColor: ColorManager.white,
-    surfaceTintColor: ColorManager.white,
+    surfaceTintColor: ColorManager.lightGrey,
   ),
 
   tabBarTheme: TabBarThemeData(
@@ -109,12 +109,6 @@ ThemeData get lightTheme => ThemeData(
     ),
   ),
 
-  iconButtonTheme: IconButtonThemeData(
-    style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.all<Color>(ColorManager.white),
-    ),
-  ),
-
   checkboxTheme: CheckboxThemeData(
     fillColor: MaterialStateProperty.all<Color>(ColorManager.primary),
     side: const BorderSide(color: ColorManager.offWhite),
@@ -122,12 +116,11 @@ ThemeData get lightTheme => ThemeData(
 
   //app bar theme
   appBarTheme: AppBarTheme(
-    backgroundColor: ColorManager.white,
+    backgroundColor: ColorManager.primary,
     shadowColor: Colors.transparent,
     surfaceTintColor: Colors.transparent,
     elevation: AppSize.s0,
     centerTitle: false,
-    iconTheme: const IconThemeData(color: kIsWeb ? ColorManager.primary : null),
     systemOverlayStyle: const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,

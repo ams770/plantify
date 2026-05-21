@@ -77,7 +77,7 @@ class AppCubit extends Cubit<AppStates> {
   // ─── Live Scan ─────────────────────────────────────────────────────────────
 
   Future<void> startLiveScan(List<CameraDescription> cameras) async {
-    if (cameras.isEmpty) {
+    if (cameras.length < 2) {
       emit(LiveScanErrorState('No cameras available'));
       return;
     }
@@ -86,7 +86,7 @@ class AppCubit extends Cubit<AppStates> {
 
     try {
       _cameraController = CameraController(
-        cameras.first,
+        cameras[1],
         ResolutionPreset.medium, // Lower = less CPU, still fine for 224×224
         enableAudio: false,
         imageFormatGroup: Platform.isAndroid
