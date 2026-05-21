@@ -17,9 +17,10 @@ class SVGAssets {
   static const String onboardingOne = "$_svgPath/onboarding_one.svg";
   static const String onboardingTwo = "$_svgPath/onboarding_two.svg";
   static const String onboardingThree = "$_svgPath/onboarding_three.svg";
-  
+
   static const String circularLines = "$_svgPath/circular_lines.svg";
 
-  static const String augmantedReality = "$_svgPath/augmanted_reality.svg";
+  static const String live = "$_svgPath/live.svg";
+  static const String openCamera = "$_svgPath/augmanted_reality.svg";
   static const String gallery = "$_svgPath/gallery.svg";
 }

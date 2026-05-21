@@ -15,6 +15,7 @@ import 'package:plantdetection/presentation/resources/values_manager.dart';
 import '../cubit/cubit.dart';
 import '../cubit/states.dart';
 import '../resources/assets_manager.dart';
+import 'live_scan_screen.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -74,16 +75,20 @@ class HomeView extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: .center,
                       children: [
-                        // _HomeItemBuilder(
-                        //   title: AppStrings.pickFromGallery.tr(),
-                        //   subTitle: '',
-                        //   svg: SVGAssets.gallery,
-                        //   onTap: () => cubit.pickGalleryImage(context),
-                        // ),
-                        // AppSize.s20.height,
+                        _HomeItemBuilder(
+                          title: AppStrings.liveDetection.tr(),
+                          subTitle: AppStrings.liveDetectionDesc.tr(),
+                          svg: SVGAssets.live,
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => LiveScanScreen(),
+                            ),
+                          ),
+                        ),
+                        AppSize.s20.height,
                         _HomeItemBuilder(
                           title: AppStrings.pickFromGallery.tr(),
-                          subTitle: '',
+                          subTitle: AppStrings.pickFromGalleryDesc.tr(),
                           svg: SVGAssets.gallery,
                           onTap: () => cubit.pickGalleryImage(context),
                         ),
@@ -91,8 +96,8 @@ class HomeView extends StatelessWidget {
                         /* ------------------------- Using Augmanted Reality ------------------------ */
                         _HomeItemBuilder(
                           title: AppStrings.takePhoto.tr(),
-                          subTitle: '',
-                          svg: SVGAssets.augmantedReality,
+                          subTitle: AppStrings.takePhotoDesc.tr(),
+                          svg: SVGAssets.openCamera,
                           onTap: () => cubit.takePhotoFromCamera(context),
                         ),
                       ],
@@ -141,15 +146,18 @@ class _HomeItemBuilder extends StatelessWidget {
           children: [
             /* ------------------------------- SVG Builder ------------------------------ */
             SvgPicture.asset(svg, height: AppSize.s120),
+            SizedBox(width: AppSize.s10),
             /* ------------------------------ Title Builder ----------------------------- */
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: .center,
+                crossAxisAlignment: .start,
                 children: [
+                  Text(title, style: Theme.of(context).textTheme.headlineSmall),
                   Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    subTitle,
+
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ],
               ),

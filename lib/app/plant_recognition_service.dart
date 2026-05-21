@@ -6,9 +6,15 @@ import 'package:image/image.dart' as image_lib;
 import 'package:plantdetection/domain/models/models.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
+import 'plan_live_detection.dart';
+
 abstract class IPlantRecognitionService {
   Future<PlantifyPrediction?> recognizeImage(File file);
+
   List<PlantDetails> get plants;
+
+  Future<PlantLiveDetectionService> startLiveDetection();
+
   void dispose();
 }
 
@@ -56,6 +62,7 @@ class PlantRecognitionService implements IPlantRecognitionService {
   /*                             Load Plants Details                            */
   /* -------------------------------------------------------------------------- */
   List<PlantDetails> _plants = [];
+
   List<PlantDetails> get plants => _plants;
 
   Future<void> _loadPlantsDetails() async {
@@ -120,6 +127,15 @@ class PlantRecognitionService implements IPlantRecognitionService {
       'confidence': bestScore,
     });
   }
+
+  @override
+  Future<PlantLiveDetectionService> startLiveDetection() =>
+      PlantLiveDetectionService.start(
+        interpreter: _interpreter!, // Shared by address — zero extra RAM
+        labels: _labels,
+        inputWidth: _inputWidth,
+        inputHeight: _inputHeight,
+      );
 
   /* -------------------------------------------------------------------------- */
   /*                                  Dispose                                   */

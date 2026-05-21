@@ -16,8 +16,12 @@ class AppStrings {
   /* -------------------------------------------------------------------------- */
   /*                                    Home                                    */
   /* -------------------------------------------------------------------------- */
+  static const String liveDetection = "live_detection";
+  static const String liveDetectionDesc = "live_detection_desc";
   static const String pickFromGallery = "pick_from_gallery";
+  static const String pickFromGalleryDesc = "pick_from_gallery_desc";
   static const String takePhoto = "take_a_photo";
+  static const String takePhotoDesc = "take_a_photo_desc";
   static const String useingAR = "using _AR";
   static const String setttings = "setttings";
   static const String appLanguage = "app_language";

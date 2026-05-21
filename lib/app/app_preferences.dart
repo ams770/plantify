@@ -13,8 +13,9 @@ class AppPreferences {
   /*                                App Language                                */
   /* -------------------------------------------------------------------------- */
   Future<String> getAppLanguage() async {
-    String? language =
-        _sharedPreferences.getString(PreferencesKeys.appLanguageKey);
+    String? language = _sharedPreferences.getString(
+      PreferencesKeys.appLanguageKey,
+    );
 
     if (language != null && language.isNotEmpty) {
       return language;
@@ -33,11 +34,15 @@ class AppPreferences {
     if (currentLanguage == LanguageType.ARABIC.getValue()) {
       //set english
       _sharedPreferences.setString(
-          PreferencesKeys.appLanguageKey, LanguageType.ENGLISH.getValue());
+        PreferencesKeys.appLanguageKey,
+        LanguageType.ENGLISH.getValue(),
+      );
     } else {
       //set arabic
       _sharedPreferences.setString(
-          PreferencesKeys.appLanguageKey, LanguageType.ARABIC.getValue());
+        PreferencesKeys.appLanguageKey,
+        LanguageType.ARABIC.getValue(),
+      );
     }
   }
 
@@ -57,8 +62,9 @@ class AppPreferences {
   /*                                 First Open                                 */
   /* -------------------------------------------------------------------------- */
   setFirstOpen() =>
-      _sharedPreferences.setBool(PreferencesKeys.firstOpenKey, true);
-  bool get isFirstOpen => _sharedPreferences.getBool(PreferencesKeys.firstOpenKey)?? true;
+      _sharedPreferences.setBool(PreferencesKeys.firstOpenKey, false);
+  bool get isFirstOpen =>
+      _sharedPreferences.getBool(PreferencesKeys.firstOpenKey) ?? true;
 }
 
 class PreferencesKeys {
