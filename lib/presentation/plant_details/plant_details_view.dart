@@ -31,10 +31,7 @@ class PlantDetailsPage extends StatelessWidget {
 
     return Scaffold(
       body: !details.isPlant
-          ? SingleChildScrollView(
-              padding: const EdgeInsets.all(AppPadding.p24),
-              child: _NotAPlantPlaceholder(plantImage: plantImage),
-            )
+          ? _NotAPlantPlaceholder(plantImage: plantImage)
           : Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: AppPadding.p24,
@@ -197,31 +194,41 @@ class _NotAPlantPlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Column(
-      crossAxisAlignment: .start,
-      children: [
-        Text(
-          AppStrings.notPlant.tr(),
-          style: textTheme.headlineSmall?.copyWith(color: ColorManager.error),
-        ),
-        const SizedBox(height: AppSize.s10),
-        Text(AppStrings.notPlantDesc.tr(), style: textTheme.bodyMedium),
-        const SizedBox(height: AppSize.s10),
-        Container(
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppSize.s20),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppPadding.p24,
+        vertical: AppPadding.p10,
+      ),
+      child: Column(
+        crossAxisAlignment: .start,
+        children: [
+          Text(
+            AppStrings.notPlant.tr(),
+            style: textTheme.headlineSmall?.copyWith(color: ColorManager.error),
           ),
-          child: plantImage == null
-              ? null
-              : Image.file(
-                  plantImage!,
-                  width: double.infinity,
-                  height: AppSize.s200,
-                  fit: BoxFit.cover,
-                ),
-        ),
-      ],
+          const SizedBox(height: AppSize.s10),
+          Text(AppStrings.notPlantDesc.tr(), style: textTheme.bodyMedium),
+          const SizedBox(height: AppSize.s10),
+          Expanded(
+            child: Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppSize.s20),
+              ),
+              child: plantImage == null
+                  ? null
+                  : Image.file(
+                      plantImage!,
+                      width: double.infinity,
+                      height: AppSize.s200,
+                      fit: BoxFit.cover,
+                    ),
+            ),
+          ),
+
+          const SafeArea(child: SizedBox(height: AppSize.s20)),
+        ],
+      ),
     );
   }
 }
