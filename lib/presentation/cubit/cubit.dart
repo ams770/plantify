@@ -22,7 +22,7 @@ class AppCubit extends Cubit<AppStates> {
   // ─── Live detection ────────────────────────────────────────────────────────
   CameraController? _cameraController;
   PlantLiveDetectionService? _liveService;
-  StreamSubscription<PlantLiveResult?>? _liveSub;
+  StreamSubscription<PlantifyPrediction?>? _liveSub;
 
   CameraController? get cameraController => _cameraController;
 
@@ -36,6 +36,7 @@ class AppCubit extends Cubit<AppStates> {
 
   // ─── Home ──────────────────────────────────────────────────────────────────
   GlobalKey<ScaffoldState> homeScaffoldKey = GlobalKey();
+
   void openHomeDrawer() => homeScaffoldKey.currentState?.openDrawer();
 
   // ─── Gallery / Camera (unchanged) ─────────────────────────────────────────
@@ -109,16 +110,17 @@ class AppCubit extends Cubit<AppStates> {
     }
   }
 
-  void _onLiveResult(PlantLiveResult? result) {
+  void _onLiveResult(PlantifyPrediction? result) {
     if (result == null) return;
     if (state is LiveScanDetectedState) return; // Already paused — ignore
 
-    if (result.index == 5) return;
+    if (!result.isPlant) return;
     // Stop feeding frames; camera preview stays alive
     _cameraController?.stopImageStream();
 
     emit(
       LiveScanDetectedState(
+        plantImage: null,
         result: result,
         details: getPlantByIndex(result.index),
       ),
@@ -139,11 +141,9 @@ class AppCubit extends Cubit<AppStates> {
   void _disposeLive() {
     _liveSub?.cancel();
     _liveSub = null;
-    try {
-      _cameraController?.stopImageStream();
-    } catch (_) {
-      // Stream may already be stopped (e.g. after a detection pause)
-    }
+
+    _cameraController?.stopVideoRecording();
+    _cameraController?.stopImageStream();
     _cameraController?.dispose();
     _cameraController = null;
     _liveService?.dispose();

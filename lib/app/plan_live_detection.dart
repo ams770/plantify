@@ -7,17 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:image/image.dart' as image_lib;
 import 'package:tflite_flutter/tflite_flutter.dart';
 
-class PlantLiveResult {
-  const PlantLiveResult({
-    required this.index,
-    required this.label,
-    required this.confidence,
-  });
-
-  final int index;
-  final String label;
-  final double confidence;
-}
+import '../domain/models/models.dart';
 
 // ─── Isolate-safe frame data ─────────────────────────────────────────────────
 // CameraImage byte buffers may be backed by native (platform) memory that
@@ -70,12 +60,12 @@ class PlantLiveDetectionService {
     required List<String> labels,
     required int inputWidth,
     required int inputHeight,
-  })  : _isolate = isolate,
-        _receivePort = receivePort,
-        _interpreter = interpreter,
-        _labels = labels,
-        _inputWidth = inputWidth,
-        _inputHeight = inputHeight;
+  }) : _isolate = isolate,
+       _receivePort = receivePort,
+       _interpreter = interpreter,
+       _labels = labels,
+       _inputWidth = inputWidth,
+       _inputHeight = inputHeight;
 
   static const double confidenceThreshold = 0.85;
 
@@ -90,8 +80,8 @@ class PlantLiveDetectionService {
   bool _isReady = false;
   bool _disposed = false;
 
-  final _resultController = StreamController<PlantLiveResult?>.broadcast();
-  Stream<PlantLiveResult?> get results => _resultController.stream;
+  final _resultController = StreamController<PlantifyPrediction?>.broadcast();
+  Stream<PlantifyPrediction?> get results => _resultController.stream;
 
   static Future<PlantLiveDetectionService> start({
     required Interpreter interpreter,
@@ -169,7 +159,7 @@ class PlantLiveDetectionService {
       case _Code.result:
         _isReady = true;
         if (!_resultController.isClosed) {
-          _resultController.add(cmd.args?[0] as PlantLiveResult?);
+          _resultController.add(cmd.args?[0] as PlantifyPrediction?);
         }
       case _Code.detect:
         throw UnimplementedError();
@@ -230,7 +220,7 @@ class _IsolateWorker {
     }
   }
 
-  PlantLiveResult? _infer(image_lib.Image raw) {
+  PlantifyPrediction? _infer(image_lib.Image raw) {
     final resized = image_lib.copyResize(raw, width: _w, height: _h);
 
     final input = [
@@ -260,7 +250,7 @@ class _IsolateWorker {
     }
 
     if (bestIndex == -1) return null;
-    return PlantLiveResult(
+    return PlantifyPrediction(
       index: bestIndex,
       label: _labels![bestIndex],
       confidence: bestScore,

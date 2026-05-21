@@ -105,7 +105,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                   /* ------------------------------ Bottom Button ----------------------------- */
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: AppPadding.p20,
+                      horizontal: AppPadding.p40,
                     ),
                     child: AppButton(
                       onPressed: _goNext,

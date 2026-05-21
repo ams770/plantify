@@ -4,11 +4,14 @@
 
 import 'dart:convert';
 
+const NOT_PLANT_INDEX = 5;
+
 /* -------------------------------------------------------------------------- */
 /*                             Plant Details Model                            */
 /* -------------------------------------------------------------------------- */
 List<PlantDetails> plantDetailsFromJson(String str) => List<PlantDetails>.from(
-    json.decode(str).map((x) => PlantDetails.fromJson(x)));
+  json.decode(str).map((x) => PlantDetails.fromJson(x)),
+);
 
 String plantDetailsToJson(List<PlantDetails> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -19,6 +22,9 @@ class PlantDetails {
   final String scientificName;
   final String description;
   final String careInstructions;
+
+  bool get isPlant => index != NOT_PLANT_INDEX;
+
   // final String image;
 
   PlantDetails({
@@ -31,22 +37,22 @@ class PlantDetails {
   });
 
   factory PlantDetails.fromJson(Map<String, dynamic> json) => PlantDetails(
-        index: json["index"],
-        name: json["name"] ?? "",
-        scientificName: json["scientificName"] ?? "",
-        description: json["description"] ?? "",
-        careInstructions: json["careInstructions"] ?? "",
-        // image: json["image"],
-      );
+    index: json["index"],
+    name: json["name"] ?? "",
+    scientificName: json["scientificName"] ?? "",
+    description: json["description"] ?? "",
+    careInstructions: json["careInstructions"] ?? "",
+    // image: json["image"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "index": index,
-        "name": name,
-        "scientificName": scientificName,
-        "description": description,
-        "careInstructions": careInstructions,
-        // "image": image,
-      };
+    "index": index,
+    "name": name,
+    "scientificName": scientificName,
+    "description": description,
+    "careInstructions": careInstructions,
+    // "image": image,
+  };
 }
 
 /* -------------------------------------------------------------------------- */
@@ -64,6 +70,8 @@ class PlantifyPrediction {
   final int index;
   final String label;
 
+  bool get isPlant => index != NOT_PLANT_INDEX;
+
   PlantifyPrediction({
     required this.confidence,
     required this.index,
@@ -78,8 +86,8 @@ class PlantifyPrediction {
       );
 
   Map<String, dynamic> toJson() => {
-        "confidence": confidence,
-        "index": index,
-        "label": label,
-      };
+    "confidence": confidence,
+    "index": index,
+    "label": label,
+  };
 }

@@ -6,6 +6,7 @@ import '../../app/plan_live_detection.dart';
 import '../../domain/models/models.dart';
 import '../cubit/cubit.dart';
 import '../cubit/states.dart';
+import '../resources/helper.dart';
 
 class LiveScanScreen extends StatefulWidget {
   const LiveScanScreen({super.key});
@@ -45,7 +46,6 @@ class _LiveScanScreenState extends State<LiveScanScreen>
   @override
   void dispose() {
     _scanAnim.dispose();
-    AppCubit.get(context).stopLiveScan();
     super.dispose();
   }
 
@@ -57,7 +57,12 @@ class _LiveScanScreenState extends State<LiveScanScreen>
         listener: (context, state) {
           if (state is LiveScanDetectedState) {
             _scanAnim.stop();
-            _showDetectionSheet(context, state.result, state.details);
+            AppHelpers.showPickedImageDetails(
+              context,
+              file: state.plantImage,
+              prediction: state.result,
+              details: state.details,
+            );
           } else if (state is LiveScanActiveState) {
             _scanAnim.repeat(reverse: true);
           }
@@ -80,37 +85,13 @@ class _LiveScanScreenState extends State<LiveScanScreen>
       ),
     );
   }
-
-  void _showDetectionSheet(
-    BuildContext context,
-    PlantLiveResult result,
-    PlantDetails details,
-  ) {
-    showModalBottomSheet(
-      context: context,
-      isDismissible: false,
-      enableDrag: false,
-      backgroundColor: Colors.transparent,
-      builder: (_) => _DetectionSheet(
-        result: result,
-        details: details,
-        onResume: () {
-          Navigator.pop(context);
-          AppCubit.get(context).resumeLiveScan();
-        },
-        onClose: () {
-          Navigator.pop(context);
-          Navigator.pop(context);
-        },
-      ),
-    );
-  }
 }
 
 // ─── Camera Layer ─────────────────────────────────────────────────────────────
 
 class _CameraPreviewLayer extends StatelessWidget {
   const _CameraPreviewLayer({required this.cubit});
+
   final AppCubit cubit;
 
   @override
@@ -139,6 +120,7 @@ class _CameraPreviewLayer extends StatelessWidget {
 
 class _ScanOverlay extends StatelessWidget {
   const _ScanOverlay({required this.scanLine, required this.isActive});
+
   final Animation<double> scanLine;
   final bool isActive;
 
@@ -155,6 +137,7 @@ class _ScanOverlay extends StatelessWidget {
 
 class _ScanPainter extends CustomPainter {
   _ScanPainter({required this.progress, required this.isActive});
+
   final double progress;
   final bool isActive;
 
@@ -259,6 +242,7 @@ class _LoadingIndicator extends StatelessWidget {
 
 class _ErrorBanner extends StatelessWidget {
   const _ErrorBanner(this.message);
+
   final String message;
 
   @override
@@ -273,140 +257,4 @@ class _ErrorBanner extends StatelessWidget {
       child: Text(message, style: const TextStyle(color: Colors.white)),
     ),
   );
-}
-
-// ─── Detection Sheet ──────────────────────────────────────────────────────────
-
-class _DetectionSheet extends StatelessWidget {
-  const _DetectionSheet({
-    required this.result,
-    required this.details,
-    required this.onResume,
-    required this.onClose,
-  });
-
-  final PlantLiveResult result;
-  final PlantDetails details;
-  final VoidCallback onResume;
-  final VoidCallback onClose;
-
-  @override
-  Widget build(BuildContext context) {
-    final confidence = (result.confidence * 100).toStringAsFixed(1);
-
-    return Container(
-      decoration: const BoxDecoration(
-        color: Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Handle
-          Center(
-            child: Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: Colors.white24,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-
-          // Confidence badge + label
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  details.name,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF4CAF50).withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: const Color(0xFF4CAF50)),
-                ),
-                child: Text(
-                  '$confidence%',
-                  style: const TextStyle(
-                    color: Color(0xFF4CAF50),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-
-          Text(
-            details.scientificName ?? '',
-            style: const TextStyle(
-              color: Colors.white38,
-              fontStyle: FontStyle.italic,
-              fontSize: 14,
-            ),
-          ),
-          const SizedBox(height: 16),
-
-          Text(
-            details.description ?? '',
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(color: Colors.white70, height: 1.5),
-          ),
-          const SizedBox(height: 24),
-
-          // Actions
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: onResume,
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    side: const BorderSide(color: Colors.white24),
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text('Scan Again'),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: onClose,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4CAF50),
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text('View Details'),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
 }

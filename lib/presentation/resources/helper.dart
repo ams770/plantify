@@ -9,7 +9,7 @@ class AppHelpers {
   /* -------------------------------------------------------------------------- */
   static showPickedImageDetails(
     BuildContext context, {
-    required File file,
+    required File? file,
     required PlantifyPrediction prediction,
     required PlantDetails details,
   }) {

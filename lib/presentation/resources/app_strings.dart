@@ -33,6 +33,8 @@ class AppStrings {
   /* -------------------------------------------------------------------------- */
   /*                         Plant Details Bottom Sheet                         */
   /* -------------------------------------------------------------------------- */
+  static const String notPlant = "not_plant";
+  static const String notPlantDesc = "not_plant_desc";
   static const String name = "name";
   static const String accuracy = "accuracy";
   static const String scientificName = "scientific_name";

@@ -53,11 +53,13 @@ class HomeView extends StatelessWidget {
                         title: AppStrings.liveDetection.tr(),
                         subTitle: AppStrings.liveDetectionDesc.tr(),
                         svg: SVGAssets.live,
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => LiveScanScreen(),
-                          ),
-                        ),
+                        onTap: () => Navigator.of(context)
+                            .push(
+                              MaterialPageRoute(
+                                builder: (context) => LiveScanScreen(),
+                              ),
+                            )
+                            .then((_) => cubit.stopLiveScan()),
                       ),
                       AppSize.s20.height,
                       _HomeOptionBuilder(
