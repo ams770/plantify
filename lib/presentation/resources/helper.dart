@@ -7,23 +7,21 @@ class AppHelpers {
   /* -------------------------------------------------------------------------- */
   /*                          Show Picker Image Details                         */
   /* -------------------------------------------------------------------------- */
-  static showPickedImageDetails(
+  static Future showPickedImageDetails(
     BuildContext context, {
     required File? file,
     required PlantifyPrediction prediction,
     required PlantDetails details,
-  }) {
-    showModalBottomSheet(
-      context: context,
-      useSafeArea: true,
-      // backgroundColor: Colors.white,
-      // barrierColor: Colors.black26,
-      showDragHandle: true,
-      builder: (ctx) => PlantDetailsPage(
-        plantImage: file,
-        prediction: prediction,
-        details: details,
-      ),
-    );
-  }
+  }) => showModalBottomSheet(
+    context: context,
+    useSafeArea: true,
+    // backgroundColor: Colors.white,
+    // barrierColor: Colors.black26,
+    showDragHandle: true,
+    builder: (ctx) => PlantDetailsPage(
+      plantImage: file,
+      prediction: prediction,
+      details: details,
+    ),
+  );
 }

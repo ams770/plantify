@@ -62,7 +62,7 @@ class _LiveScanScreenState extends State<LiveScanScreen>
               file: state.plantImage,
               prediction: state.result,
               details: state.details,
-            );
+            ).then((_) => _scanAnim.repeat(reverse: true));
           } else if (state is LiveScanActiveState) {
             _scanAnim.repeat(reverse: true);
           }

@@ -87,7 +87,7 @@ class AppCubit extends Cubit<AppStates> {
 
     try {
       _cameraController = CameraController(
-        cameras[1],
+        cameras.first,
         ResolutionPreset.medium, // Lower = less CPU, still fine for 224×224
         enableAudio: false,
         imageFormatGroup: Platform.isAndroid
