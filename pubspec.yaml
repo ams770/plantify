@@ -97,6 +97,7 @@ flutter:
     - assets/svg/gallery.svg
     # ---------------------------------- Images ---------------------------------- #
     - assets/images/logo.png      
+    - assets/flowers/
     # ------------------------------- tflite Model ------------------------------- #
     - assets/tflite/model.tflite
     - assets/tflite/labels.json

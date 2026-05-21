@@ -141,8 +141,6 @@ class AppCubit extends Cubit<AppStates> {
   void _disposeLive() {
     _liveSub?.cancel();
     _liveSub = null;
-
-    _cameraController?.stopVideoRecording();
     _cameraController?.stopImageStream();
     _cameraController?.dispose();
     _cameraController = null;

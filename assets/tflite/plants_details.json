@@ -2,49 +2,49 @@
     {
         "index": 0,
         "name": "Allium",
-        "scientificName": "Allium",
-        "description": "Allium is a genus of flowering plants that includes onions, garlic, and chives.",
-        "careInstructions": "Allium plants prefer well-drained soil and full sun exposure.",
-        "image": "https://example.com/allium.jpg"
+        "scientificName": "Allium hollandicum",
+        "description": "An ornamental hardy bulbous perennial that sends up tall, sturdy stems topped with perfectly round, globe-shaped violet flowerheads made of dozens of tiny star-shaped blooms.",
+        "careInstructions": "Thrives best in full sun and sharply well-drained, gritty soil. Water deeply after planting in autumn, then keep on the drier side to prevent bulb rot.",
+        "image": "assets/flowers/Allium.png"
     },
     {
         "index": 1,
         "name": "Alstroemeria",
-        "scientificName": "Alstroemeria",
-        "description": "Alstroemeria, also known as Peruvian lily, is a genus of flowering plants native to South America.",
-        "careInstructions": "Alstroemeria plants require regular watering and partial shade.",
-        "image": "https://example.com/alstroemeria.jpg"
+        "scientificName": "Alstroemeria aurea",
+        "description": "Also known as the Peruvian Lily or Lily of the Incas, this tuberous perennial produces terminal clusters of brilliant orange or golden-yellow, orchid-like striped flowers.",
+        "careInstructions": "Prefers full morning sun with light afternoon shade. Requires fertile, consistently moist but well-drained soil. Pull spent stems from the base to promote new blooms.",
+        "image": "assets/flowers/Alstroemeria.png"
     },
     {
         "index": 2,
         "name": "Alyssum",
         "scientificName": "Lobularia maritima",
-        "description": "Alyssum is a genus of flowering plants in the family Brassicaceae, native to the Mediterranean region.",
-        "careInstructions": "Alyssum plants prefer full sun and well-drained soil. They are drought-tolerant and low-maintenance.",
-        "image": "https://example.com/alyssum.jpg"
+        "description": "Commonly called Sweet Alyssum, this low-growing, mat-forming annual produces dense, spreading mounds of tiny, highly fragrant white or purple flowers with a honey-like scent.",
+        "careInstructions": "Best grown in full sun to partial shade in free-draining coastal or garden soil. Highly drought-tolerant once established. Shearing back by half after a flush encourages repeat blooming.",
+        "image": "assets/flowers/Alyssum.png"
     },
     {
         "index": 3,
         "name": "Amaranthus",
-        "scientificName": "Amaranthus",
-        "description": "Amaranthus is a genus of annual or short-lived perennial plants known for their vibrant, showy flowers and edible leaves.",
-        "careInstructions": "Amaranthus plants thrive in warm climates with well-drained soil. They require regular watering.",
-        "image": "https://example.com/amaranthus.jpg"
+        "scientificName": "Amaranthus caudatus",
+        "description": "Known as Love-Lies-Bleeding, this striking, erect annual features dramatic, long tassel-like drooping clusters of tiny crimson, petalless flowers over large light-green leaves.",
+        "careInstructions": "Thrives in warm, sheltered environments with full sun exposure. Grows easily in average, moist, well-drained soil. May require staking or support as the heavy tassels mature.",
+        "image": "assets/flowers/Amaranthus.png"
     },
     {
         "index": 4,
         "name": "Anemone",
-        "scientificName": "Anemone",
-        "description": "Anemone is a genus of flowering plants in the family Ranunculaceae, known for its delicate and colorful flowers.",
-        "careInstructions": "Anemone plants prefer moist, well-drained soil and partial shade. They are great for adding a pop of color to gardens.",
-        "image": "https://example.com/anemone.jpg"
+        "scientificName": "Anemone coronaria",
+        "description": "Commonly called the Poppy Anemone, this perennial produces striking, shallow cup-shaped poppy-like flowers in bold shades of red, blue, purple, or white with prominent dark central buttons.",
+        "careInstructions": "Plant in rich, medium-moisture, well-drained soils under partial shade. Soak the hard, knuckle-like tubers in lukewarm water for a few hours before planting in the fall.",
+        "image": "assets/flowers/Anemone.png"
     },
-  {
-    "index": 5,
-    "name": "Not Plant",
-    "scientificName": "Not Plant",
-    "description": "Anemone is a genus of flowering plants in the family Ranunculaceae, known for its delicate and colorful flowers.",
-    "careInstructions": "Anemone plants prefer moist, well-drained soil and partial shade. They are great for adding a pop of color to gardens.",
-    "image": "https://example.com/anemone.jpg"
-  }
+    {
+        "index": 5,
+        "name": "Not Plant",
+        "scientificName": null,
+        "description": "Invalid botanical record. This data slot does not map to a recognized flowering plant genus or species.",
+        "careInstructions": null,
+        "image": ""
+    }
 ]

@@ -157,6 +157,8 @@ class PlantLiveDetectionService {
       case _Code.busy:
         _isReady = false;
       case _Code.result:
+        print((cmd.args?[0] as PlantifyPrediction?)?.label);
+        print((cmd.args?[0] as PlantifyPrediction?)?.confidence);
         _isReady = true;
         if (!_resultController.isClosed) {
           _resultController.add(cmd.args?[0] as PlantifyPrediction?);

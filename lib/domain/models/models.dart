@@ -25,7 +25,7 @@ class PlantDetails {
 
   bool get isPlant => index != NOT_PLANT_INDEX;
 
-  // final String image;
+  final String image;
 
   PlantDetails({
     required this.index,
@@ -33,7 +33,7 @@ class PlantDetails {
     required this.scientificName,
     required this.description,
     required this.careInstructions,
-    // required this.image,
+    required this.image,
   });
 
   factory PlantDetails.fromJson(Map<String, dynamic> json) => PlantDetails(
@@ -42,7 +42,7 @@ class PlantDetails {
     scientificName: json["scientificName"] ?? "",
     description: json["description"] ?? "",
     careInstructions: json["careInstructions"] ?? "",
-    // image: json["image"],
+    image: json["image"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -51,7 +51,7 @@ class PlantDetails {
     "scientificName": scientificName,
     "description": description,
     "careInstructions": careInstructions,
-    // "image": image,
+    "image": image,
   };
 }
 
