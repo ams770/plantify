@@ -16,6 +16,9 @@ class AppStrings {
   /* -------------------------------------------------------------------------- */
   /*                                    Home                                    */
   /* -------------------------------------------------------------------------- */
+  static const String homeHeaderTitle = "home_header_title";
+  static const String homeHeaderSubTitle = "home_header_sub_title";
+
   static const String liveDetection = "live_detection";
   static const String liveDetectionDesc = "live_detection_desc";
   static const String pickFromGallery = "pick_from_gallery";

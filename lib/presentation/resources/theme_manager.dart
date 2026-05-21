@@ -85,6 +85,18 @@ ThemeData get lightTheme => ThemeData(
     fillColor: MaterialStateProperty.all<Color>(ColorManager.primary),
   ),
 
+  listTileTheme: ListTileThemeData(
+    titleTextStyle: getBoldStyle(
+      fontSize: FontSize.s30.sp,
+      color: ColorManager.darkGrey,
+    ),
+
+    subtitleTextStyle: getMediumStyle(
+      fontSize: FontSize.s16.sp,
+      color: ColorManager.darkGrey,
+    ),
+  ),
+
   //card theme
   cardTheme: CardThemeData(
     color: ColorManager.white,

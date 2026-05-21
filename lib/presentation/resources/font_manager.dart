@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class FontConstants {
   static const String fontFamily = "Poppins";
- 
 }
 
 class FontWeightManager {
@@ -27,6 +26,7 @@ class FontSize {
   static const double s22 = 22.0;
   static const double s23 = 23.0;
   static const double s26 = 26.0;
+  static const double s28 = 28.0;
   static const double s30 = 30.0;
   static const double s32 = 32.0;
   static const double s40 = 40.0;

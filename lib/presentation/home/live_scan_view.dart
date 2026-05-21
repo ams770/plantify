@@ -22,7 +22,10 @@ class _LiveScanScreenState extends State<LiveScanScreen>
   @override
   void initState() {
     super.initState();
+    _initPage();
+  }
 
+  void _initPage() {
     _scanAnim = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
