@@ -101,7 +101,6 @@ flutter:
     # ------------------------------- tflite Model ------------------------------- #
     - assets/tflite/model.tflite
     - assets/tflite/labels.json
-    - assets/tflite/labels.txt
     - assets/tflite/plants_details.json
 
     

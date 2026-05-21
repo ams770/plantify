@@ -3,8 +3,9 @@
 //     final plantDetails = plantDetailsFromJson(jsonString);
 
 import 'dart:convert';
+import 'package:plantdetection/app/constants.dart';
 
-const NOT_PLANT_INDEX = 5;
+const NOT_PLANT_INDEX = Constants.notPlantIndex;
 
 /* -------------------------------------------------------------------------- */
 /*                             Plant Details Model                            */
